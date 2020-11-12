@@ -58,23 +58,25 @@ def update_androidx(line):
     return line
 
 
-if __name__ == '__main__':
+def replace_support(file):
     need_replace = False
     content = ''
-    files = get_all_files('/Users/liepu/weimai/test')
-    for file in files:
-        for line in iter(open(file)):
-            if line.__contains__('android.support') or line.__contains__('android.arch') or \
-                    line.__contains__('android.databinding') or line.__contains__('android.test'):
-                content += update_androidx(line)
-                need_replace = True
-            else:
-                content += line
-        if need_replace:
-            print(file)
-            fo = open(file, 'w')
-            fo.write(content)
-            fo.close()
+    for line in iter(open(file)):
+        if line.__contains__('android.support') or line.__contains__('android.arch') or \
+                line.__contains__('android.databinding') or line.__contains__('android.test'):
+            content += update_androidx(line)
+            need_replace = True
+        else:
+            content += line
+    if need_replace:
+        print(file)
+        fo = open(file, 'w')
+        fo.write(content)
+        fo.close()
 
+
+if __name__ == '__main__':
+    files = get_all_files(cur_path)
+    for file in files:
+        replace_support(file)
     print(len(files))
-    read_csv('androidx-class-mapping.csv')
