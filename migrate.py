@@ -52,8 +52,10 @@ def read_csv(path):
 def update_androidx(line):
     lists = read_csv('androidx-class-mapping.csv')
     for item in lists:
-        if line.__contains__(item['Support Library class']):
-            line = line.replace(item['Support Library class'], item['Android X class'])
+        key = item['Support Library class']
+        value = item['Android X class']
+        if line.__contains__(key):
+            line = line.replace(key, value)
             break
     return line
 
@@ -76,7 +78,7 @@ def replace_support(file):
 
 
 if __name__ == '__main__':
-    files = get_all_files(cur_path)
+    files = get_all_files('/Users/liepu/migrateTest/wiemai_app')
     for file in files:
         replace_support(file)
     print(len(files))
